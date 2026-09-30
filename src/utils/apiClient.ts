@@ -1,4 +1,6 @@
-const API_BASE = 'http://127.0.0.1:5000/api';
+// Use Vite's same-origin proxy in development; deployments can set
+// VITE_API_BASE_URL when the API is hosted on a separate origin.
+const API_BASE = `${(import.meta.env.VITE_API_BASE_URL || '').replace(/\/$/, '')}/api`;
 
 export function getStoredToken(): string | null {
   return localStorage.getItem('finsight_token');

@@ -2,36 +2,37 @@
 
 @layer base {
   :root {
-    --background: 0 0% 0%;
+    --background: 215 35% 6%;
     --foreground: 0 0% 100%;
-    --card: 0 0% 5%;
+    --card: 214 32% 10%;
     --card-foreground: 0 0% 98%;
     --popover: 0 0% 5%;
     --popover-foreground: 0 0% 98%;
     --primary: 0 0% 100%;
     --primary-foreground: 0 0% 0%;
-    --secondary: 0 0% 12%;
+    --secondary: 214 24% 15%;
     --secondary-foreground: 0 0% 98%;
-    --muted: 0 0% 15%;
-    --muted-foreground: 0 0% 65%;
-    --accent: 0 0% 20%;
+    --muted: 214 24% 15%;
+    --muted-foreground: 214 12% 68%;
+    --accent: 168 82% 42%;
     --accent-foreground: 0 0% 98%;
     --destructive: 0 0% 40%;
     --destructive-foreground: 0 0% 98%;
-    --border: 0 0% 18%;
-    --input: 0 0% 18%;
-    --ring: 0 0% 80%;
+    --border: 214 22% 20%;
+    --input: 214 22% 20%;
+    --ring: 168 82% 42%;
   }
 
   * {
-    border-color: #262626;
+    border-color: #263342;
   }
 
   body {
-    background-color: #000000;
+    background-color: #080f19;
     color: #f5f5f5;
     font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     overflow-x: hidden;
+    min-height: 100vh;
   }
 }
 
@@ -53,17 +54,66 @@
 
 /* Minimalist Monochrome Panels */
 .glass-panel {
-  background: #000000;
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(13, 24, 36, 0.88);
+  border: 1px solid rgba(148, 163, 184, 0.16);
+  box-shadow: 0 18px 50px rgba(0, 0, 0, 0.18);
 }
 
 .glass-card {
-  background: #0A0A0A;
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 8px;
+  background: linear-gradient(145deg, #101d2b, #0c1621);
+  border: 1px solid rgba(148, 163, 184, 0.15);
+  border-radius: 14px;
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.16);
+  transition: border-color 180ms ease, transform 180ms ease, box-shadow 180ms ease;
 }
 
 .glass-card:hover {
-  border-color: rgba(255, 255, 255, 0.14);
+  border-color: rgba(45, 212, 191, 0.34);
+  transform: translateY(-2px);
+  box-shadow: 0 18px 44px rgba(0, 0, 0, 0.24);
+}
+
+/* Shared palette polish for the existing Tailwind utility classes. */
+[class~="bg-black"] { background-color: #080f19; }
+[class~="bg-[#000000]"] { background-color: #0a121d; }
+[class~="bg-[#0A0A0A]"] { background-color: #0d1824; }
+[class~="bg-[#0D0D0D]"] { background-color: #101c29; }
+[class~="bg-neutral-950"] { background-color: #0d1722; }
+[class~="bg-neutral-900"] { background-color: #142130; }
+[class~="bg-neutral-800"] { background-color: #1c2b3b; }
+[class~="border-neutral-800"] { border-color: #263748; }
+[class~="border-neutral-700"] { border-color: #33485c; }
+
+button,
+a,
+input,
+select,
+textarea {
+  transition-timing-function: cubic-bezier(0.2, 0.75, 0.25, 1);
+}
+
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: 2px solid #2dd4bf;
+  outline-offset: 3px;
+}
+
+::selection {
+  background: rgba(45, 212, 191, 0.3);
+  color: #f8fafc;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }
 

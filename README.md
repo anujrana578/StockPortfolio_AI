@@ -16,18 +16,8 @@ FinSight is a full-stack portfolio management application featuring a real AI/ML
    ```bash
    pip install -r requirements.txt
    ```
-2. Initialize the database and train the ML model:
-   - Place historical stock data (CSV format) in the `data/` directory (e.g. `data/GSPC.csv`, `data/AAPL.csv`). The CSV should contain `Date, Open, High, Low, Close, Volume`.
-   - Run the feature engineering and model training script:
-     ```bash
-     python ml/train_model.py
-     ```
-   - This generates `ml/models/stock_model.pkl` and `ml/models/metadata.json`.
-3. Start the Flask API:
-   ```bash
-   python app.py
-   ```
-   *The backend will run on `http://127.0.0.1:5000`.*
+2. Historical data and a trained model are included for local development. To
+   retrain the model with new CSV data, run `python ml/train_model.py`.
 
 ### 2. Frontend Setup
 
@@ -37,11 +27,15 @@ FinSight is a full-stack portfolio management application featuring a real AI/ML
    ```
 2. Set up environment variables (if required for Google OAuth):
    Create a `.env` file and set `VITE_GOOGLE_CLIENT_ID`.
-3. Start the Vite development server:
+3. Start the Flask API and Vite frontend together:
    ```bash
    npm run dev
    ```
-   *The frontend will run on `http://127.0.0.1:5173` (or the port Vite outputs).*
+   The API runs on `http://127.0.0.1:5000` and the frontend on
+   `http://localhost:5173` (or the port Vite outputs). The frontend proxies
+   `/api` requests to Flask. Both servers must stay running for API features.
+   To run one server separately, use `npm run dev:api` or
+   `npm run dev:frontend`.
 
 ## AI Predictor Details
 The prediction engine utilizes multi-dimensional feature engineering:

@@ -20,6 +20,9 @@ import { useEffect } from 'react';
 import { formatCurrency, formatPercent } from '../utils/formatters';
 import { Holding, WatchlistItem } from '../types';
 import { Plus, Eye } from 'lucide-react';
+import { getStoredToken } from '../utils/apiClient';
+
+const API_BASE = `${(import.meta.env.VITE_API_BASE_URL || '').replace(/\/$/, '')}/api`;
 
 interface PredictorPageProps {
   selectedStockSymbol: string;
@@ -67,9 +70,9 @@ export const PredictorPage: React.FC<PredictorPageProps> = ({
 
   const fetchTransactions = async () => {
     try {
-      const token = localStorage.getItem('finsight_token') || '';
-      const res = await fetch(`http://127.0.0.1:5000/api/transactions/${currentSymbol}`, {
-        headers: { 'Authorization': `Bearer ${token}` }
+      const token = getStoredToken();
+      const res = await fetch(`${API_BASE}/transactions/${currentSymbol}`, {
+        headers: token ? { 'Authorization': `Bearer ${token}` } : {}
       });
       if (res.ok) {
         const data = await res.json();
@@ -82,9 +85,9 @@ export const PredictorPage: React.FC<PredictorPageProps> = ({
 
   const fetchBalance = async () => {
     try {
-      let token = localStorage.getItem('finsight_token') || '';
-      const res = await fetch(`http://127.0.0.1:5000/api/portfolio/balance`, {
-        headers: { 'Authorization': `Bearer ${token}` }
+      const token = getStoredToken();
+      const res = await fetch(`${API_BASE}/portfolio/balance`, {
+        headers: token ? { 'Authorization': `Bearer ${token}` } : {}
       });
       const data = await res.json();
       if (res.ok && data.balance !== undefined) {
@@ -99,16 +102,10 @@ export const PredictorPage: React.FC<PredictorPageProps> = ({
     setIsLoading(true);
     setError('');
     try {
-      let token = '';
-      const auth = localStorage.getItem('finsight_auth');
-      if (auth) {
-        try { token = JSON.parse(auth).token || ''; } catch (e) { }
-      }
+      const token = getStoredToken();
 
-      const res = await fetch(`http://127.0.0.1:5000/api/predictions/${currentSymbol}`, {
-        headers: {
-          'Authorization': `Bearer ${token}`
-        }
+      const res = await fetch(`${API_BASE}/predictions/${encodeURIComponent(currentSymbol)}`, {
+        headers: token ? { 'Authorization': `Bearer ${token}` } : {}
       });
       const data = await res.json();
       if (!res.ok) {
@@ -149,13 +146,13 @@ export const PredictorPage: React.FC<PredictorPageProps> = ({
 
     setIsBuying(true);
     try {
-      const token = localStorage.getItem('finsight_token') || '';
+      const token = getStoredToken();
 
-      const res = await fetch('http://127.0.0.1:5000/api/transactions', {
+      const res = await fetch(`${API_BASE}/transactions`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`
+          ...(token ? { 'Authorization': `Bearer ${token}` } : {})
         },
         body: JSON.stringify({
           symbol: prediction.symbol,
@@ -225,13 +222,13 @@ export const PredictorPage: React.FC<PredictorPageProps> = ({
 
     setIsSelling(true);
     try {
-      const token = localStorage.getItem('finsight_token') || '';
+      const token = getStoredToken();
 
-      const res = await fetch('http://127.0.0.1:5000/api/transactions', {
+      const res = await fetch(`${API_BASE}/transactions`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`
+          ...(token ? { 'Authorization': `Bearer ${token}` } : {})
         },
         body: JSON.stringify({
           symbol: prediction.symbol,
