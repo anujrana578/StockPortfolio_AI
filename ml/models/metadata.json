@@ -1,0 +1,40 @@
+{
+    "model": "XGBoost",
+    "version": "1.0",
+    "features": [
+        "Open",
+        "High",
+        "Low",
+        "Close",
+        "Volume",
+        "daily_return",
+        "return_5d",
+        "return_10d",
+        "return_20d",
+        "SMA_7",
+        "SMA_20",
+        "SMA_50",
+        "EMA_12",
+        "EMA_26",
+        "volatility_7d",
+        "volatility_20d",
+        "RSI_14",
+        "MACD",
+        "MACD_signal",
+        "MACD_histogram",
+        "BB_middle",
+        "BB_upper",
+        "BB_lower",
+        "momentum_5",
+        "momentum_10",
+        "momentum_20"
+    ],
+    "metrics": {
+        "mae": 774.36,
+        "rmse": 873.57,
+        "r2": -6.7968,
+        "mape": 13.43
+    },
+    "pi_margin": 802.2656297532876,
+    "trainedAt": "2026-09-30T11:11:50.082441"
+}
